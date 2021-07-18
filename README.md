@@ -30,7 +30,7 @@ MIT
 
 ## Credits
 
-This package takes a lot of inspiration, both design and functionality-wise from [Datasette](https://datasette.io/). It also uses the following libraries:
+This package takes a lot of inspiration, both design and functionality-wise, from [Datasette](https://datasette.io/). It also uses the following libraries:
 
 - [sql.js](https://github.com/sql-js/sql.js/), an entirely in-browser SQLite engine
 - [x-canvas-table](https://github.com/xwinstone/canvastable), a highly performant canvas-based table renderer
