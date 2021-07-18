@@ -22,6 +22,10 @@ Build a productionized bundle:
 npm run build
 ```
 
+## License
+
+MIT
+
 ## Credits
 
 This package takes a lot of inspiration, both design and functionality-wise from [Datasette](https://datasette.io/). It also uses the following libraries:
