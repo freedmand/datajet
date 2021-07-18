@@ -2,6 +2,8 @@
 
 A client-side tool for exploring SQLite databases. Inspired by [Datasette](https://datasette.io/), this tool aims to be a quick way to poke around datasets without having to stand up a server.
 
+[Online Tool](https://datajet.pages.dev/)
+
 ## Usage
 
 Install using npm:
