@@ -1,5 +1,6 @@
 <script>
   import { createEventDispatcher } from "svelte";
+  import Map from "@/components/Map";
   import Table from "@/components/Table";
 
   const dispatch = createEventDispatcher();
@@ -49,6 +50,7 @@
   {#if results != null}
     {#each results as resultTable}
       <div>Row count: {resultTable.values.length}</div>
+      <Map columns={resultTable.columns} values={resultTable.values} />
       <Table columns={resultTable.columns} values={resultTable.values} />
     {/each}
   {/if}
