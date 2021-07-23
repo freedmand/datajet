@@ -6,4 +6,7 @@ body {
   margin: 0;
   padding: 2rem;
   box-sizing: border-box;
+  font-family: "Secular One", sans-serif;
+  background: #2e2d2b;
+  color: #fff;
 }

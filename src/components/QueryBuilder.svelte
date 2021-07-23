@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, onMount } from "svelte";
   import Map from "@/components/Map";
   import Table from "@/components/Table";
 
@@ -11,8 +11,6 @@
   let results = null;
   let running = false;
 
-  $: disabledButton = running || query.trim().length == 0 || results != null;
-
   function runQuery() {
     running = true;
     results = db.exec(query);
@@ -20,35 +18,25 @@
     running = false;
     dispatch("done", query);
   }
+
+  onMount(() => {
+    runQuery();
+  });
 </script>
 
 <style lang="scss">
-  textarea {
-    width: 100%;
-    max-width: 600px;
-  }
-
   .query {
-    border: solid 1px gainsboro;
+    border: solid 1px rgba(255, 255, 255, 0.201);
     padding: 20px 10px;
+    margin: 10px 0;
     box-sizing: border-box;
   }
 </style>
 
 <div class="query">
-  <div>
-    <textarea
-      disabled={running || results != null}
-      placeholder="Enter SQLite query"
-      bind:value={query}
-    />
-  </div>
-  {#if results == null}
-    <button on:click={runQuery} disabled={disabledButton}>Run query</button>
-  {/if}
-
   {#if results != null}
     {#each results as resultTable}
+      <div><code>{query}</code></div>
       <div>Row count: {resultTable.values.length}</div>
       <Map columns={resultTable.columns} values={resultTable.values} />
       <Table columns={resultTable.columns} values={resultTable.values} />

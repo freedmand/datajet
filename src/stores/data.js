@@ -31,3 +31,15 @@ export const tableRows = derived([tables, db], ([tables, db]) => {
   });
   return tableMap;
 });
+
+export const tableColumns = derived([tables, db], ([tables, db]) => {
+  const tableMap = {};
+  if (tables == null || db == null) return tableMap;
+
+  tables.forEach((table) => {
+    // Run a query to get the number of rows in the table
+    const results = db.exec(`PRAGMA table_info(${table})`);
+    tableMap[table] = results[0].values.map((x) => x[1]);
+  });
+  return tableMap;
+});

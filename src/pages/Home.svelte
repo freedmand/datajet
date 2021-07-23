@@ -1,8 +1,17 @@
 <script>
   import initSqlJs from "sql.js";
-  import { SQL, dbFile, db, tables, table, tableRows } from "@/stores/data";
+  import {
+    SQL,
+    dbFile,
+    db,
+    tables,
+    table,
+    tableRows,
+    tableColumns,
+  } from "@/stores/data";
 
   import QueryBuilder from "@/components/QueryBuilder";
+  import QueryEngine from "@/components/QueryEngine";
 
   import sqlWasm from "!!file-loader?name=sql-wasm-[contenthash].wasm!sql.js/dist/sql-wasm.wasm";
 
@@ -54,7 +63,29 @@
   }
 </script>
 
-<h1>DataJet</h1>
+<style lang="scss">
+  .accent {
+    color: $accent;
+  }
+
+  .breadcrumbs {
+    * {
+      display: inline-block;
+    }
+
+    .breaditem {
+      border-bottom: solid 3px $accent;
+    }
+
+    .breadseparator {
+      color: $tertiary;
+      transform: scale(-1, 1);
+      margin: 0 10px;
+    }
+  }
+</style>
+
+<h1>data<span class="accent">jet</span> 🚀</h1>
 
 {#if $SQL == null}
   <!-- Show loading -->
@@ -76,18 +107,33 @@
     </button>
   {/each}
 {:else}
-  <h2>{$table}</h2>
-  {#if $tableRows[$table] != null}
-    <p>Row count: {$tableRows[$table].toLocaleString()}</p>
+  <div class="breadcrumbs">
+    <div class="breaditem">db</div>
+    <div class="breadseparator">&lt;</div>
+    <div class="breaditem">
+      {$table}
+      {#if $tableRows[$table] != null}
+        <small>({$tableRows[$table].toLocaleString()} rows)</small>
+      {/if}
+    </div>
+  </div>
+
+  {#if $tableColumns[$table] != null}
+    <QueryEngine
+      query="SELECT * FROM {$table}"
+      schema={{ [$table]: $tableColumns[$table] }}
+      db={$db}
+    />
   {/if}
-  {#each queries as query (query.idx)}
+
+  <!-- {#each queries as query (query.idx)}
     <QueryBuilder
       query={query.text || `SELECT * from ${$table} LIMIT 10`}
       on:done={pushQuery}
       table={$table}
       db={$db}
     />
-  {/each}
+  {/each} -->
 {/if}
 
 <hr />
